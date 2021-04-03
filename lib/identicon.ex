@@ -13,7 +13,7 @@ defmodule Identicon do
 
   @doc """
     Utilizes MD5 algorithm to hash a string and return
-    a List of 16 bytes.
+    an %Identicon.Image{ hex: [List of 16 bytes] }
 
   ## Example
       iex> Identicon.hash_input("sam")
