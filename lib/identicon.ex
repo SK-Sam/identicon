@@ -14,7 +14,7 @@ defmodule Identicon do
     |> filter_odd_cells
     |> build_pixel_map
     |> draw_image
-    |> save_image
+    |> save_image(input)
   end
 
   @doc """
@@ -98,5 +98,9 @@ defmodule Identicon do
     end
 
     :egd.render(identicon)
+  end
+
+  def save_image(image, filename) do
+    File.write("#{filename}.png", image)
   end
 end
