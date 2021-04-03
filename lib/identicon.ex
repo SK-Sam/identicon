@@ -12,6 +12,9 @@ defmodule Identicon do
     |> pick_color
     |> build_grid
     |> filter_odd_cells
+    |> build_pixel_map
+    |> draw_image
+    |> save_image(input)
   end
 
   @doc """
@@ -66,5 +69,38 @@ defmodule Identicon do
     filtered_grid = Enum.filter(grid, fn({byte, _cell}) = _coord -> rem(byte, 2) == 0 end)
 
     %Identicon.Image{image | grid: filtered_grid}
+  end
+
+  def build_pixel_map(image) do
+    %Identicon.Image{grid: grid} = image
+
+   pixel_map = Enum.map grid, fn({_byte, index}) ->
+      horizontal_dist = rem(index, 5) * 50
+      vertical_dist = div(index, 5) * 50
+
+      top_left = {horizontal_dist, vertical_dist}
+      bottom_right = {horizontal_dist + 50, vertical_dist + 50}
+
+      {top_left, bottom_right}
+    end
+
+    %Identicon.Image{image | pixel_map: pixel_map}
+  end
+
+  def draw_image(image) do
+    %Identicon.Image{color: color, pixel_map: pixel_map} = image
+
+    identicon = :egd.create(250, 250)
+    fill_color = :egd.color(color)
+
+    Enum.each pixel_map, fn({start, stop}) ->
+      :egd.filledRectangle(identicon, start, stop, fill_color)
+    end
+
+    :egd.render(identicon)
+  end
+
+  def save_image(image, filename) do
+    File.write("#{filename}.png", image)
   end
 end
