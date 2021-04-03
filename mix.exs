@@ -8,7 +8,7 @@ defmodule Identicon.MixProject do
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      xref: [exclude: [:crypto]]
+      xref: [exclude: [:crypto, :egd]]
     ]
   end
 
