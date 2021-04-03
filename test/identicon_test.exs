@@ -9,5 +9,13 @@ defmodule IdenticonTest do
     assert Identicon.hash_input(input) == byte_list
     assert Enum.count(Identicon.hash_input("some random string")) == 16
     assert Enum.count(Identicon.hash_input(input)) == 16
+
+    empty_string = ""
+
+    assert Enum.count(Identicon.hash_input(empty_string)) == 16
+
+    space_string = " "
+
+    assert Enum.count(Identicon.hash_input(space_string)) == 16
   end
 end
