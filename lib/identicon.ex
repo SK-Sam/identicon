@@ -17,10 +17,14 @@ defmodule Identicon do
 
   ## Example
       iex> Identicon.hash_input("sam")
-      [51, 37, 50, 220, 250, 161, 203, 246, 30, 42, 38, 107, 215, 35, 97, 44]
+      %Identicon.Image{
+        hex: [51, 37, 50, 220, 250, 161, 203, 246, 30, 42, 38, 107, 215, 35, 97, 44]
+      }
   """
   def hash_input(input) do
-    :crypto.hash(:md5, input)
+    hex = :crypto.hash(:md5, input)
     |> :binary.bin_to_list
+
+    %Identicon.Image{hex: hex}
   end
 end
