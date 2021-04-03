@@ -8,7 +8,7 @@ defmodule Identicon do
 
   def main(input) do
     input
-    |> hash_input()
+    |> hash_input
     |> pick_color
     |> build_grid
   end
