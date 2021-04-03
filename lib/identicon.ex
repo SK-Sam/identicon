@@ -13,6 +13,8 @@ defmodule Identicon do
     |> build_grid
     |> filter_odd_cells
     |> build_pixel_map
+    |> draw_image
+    |> save_image
   end
 
   @doc """
@@ -83,5 +85,18 @@ defmodule Identicon do
     end
 
     %Identicon.Image{image | pixel_map: pixel_map}
+  end
+
+  def draw_image(image) do
+    %Identicon.Image{color: color, pixel_map: pixel_map} = image
+
+    identicon = :egd.create(250, 250)
+    fill_color = :egd.color(color)
+
+    Enum.each pixel_map, fn({start, stop}) ->
+      :egd.filledRectangle(identicon, start, stop, fill_color)
+    end
+
+    :egd.render(identicon)
   end
 end
