@@ -11,6 +11,7 @@ defmodule Identicon do
     |> hash_input
     |> pick_color
     |> build_grid
+    |> filter_odd_cells
   end
 
   @doc """
@@ -58,5 +59,12 @@ defmodule Identicon do
   def mirror_row(row) do
     [first, second | _tail] = row
     row ++ [second, first]
+  end
+
+  def filter_odd_cells(image) do
+    %Identicon.Image{grid: grid} = image
+    filtered_grid = Enum.filter(grid, fn({byte, _cell}) = _coord -> rem(byte, 2) == 0 end)
+
+    %Identicon.Image{image | grid: filtered_grid}
   end
 end
