@@ -1,6 +1,9 @@
 defmodule Identicon do
   @moduledoc """
-  Documentation for `Identicon`.
+    Identicon is a Github default profile icon generator. Based on string
+    input, Identicon will create a 5x5 grid with colored or uncolored cells.
+    Identicon will use MD5 to hash a string, and color cells with even-value
+    bytes. Icons generated should be vertically symmetrical.
   """
 
   def main(input) do
