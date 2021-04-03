@@ -10,6 +10,7 @@ defmodule Identicon do
     input
     |> hash_input()
     |> pick_color
+    |> build_grid
   end
 
   @doc """
@@ -37,5 +38,20 @@ defmodule Identicon do
     [r, g, b | _tail] = hex_list
 
     %Identicon.Image{image | color: {r, g, b}}
+  end
+
+  @doc """
+    Return a grid of 25 cells(5x5)
+  """
+  def build_grid(image) do
+    %Identicon.Image{hex: hex_list} = image
+    hex_list
+    |> Enum.chunk_every(3, 3, :discard)
+    |> Enum.map(fn row -> mirror_row(row) end)
+  end
+
+  def mirror_row(row) do
+    [first, second | _tail] = row
+    row ++ [second, first]
   end
 end
