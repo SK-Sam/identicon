@@ -47,7 +47,7 @@ defmodule Identicon do
     %Identicon.Image{hex: hex_list} = image
     hex_list
     |> Enum.chunk_every(3, 3, :discard)
-    |> Enum.map(fn row -> mirror_row(row) end)
+    |> Enum.map(&mirror_row/1)
   end
 
   def mirror_row(row) do
